@@ -227,5 +227,5 @@ This is a private project. Contact the owner for contribution guidelines.
 
 ---
 
-**Made with ❤️ by Vivek Singhtomar**
+**Made with ❤️ by Vivek Singh Tomar**
 # Personal-Finance-Management-system-BudgetBuddy-

@@ -44,7 +44,7 @@ const SidebarElement = ({ title, collapsed, effectClass, icon: Icon, links }) =>
           <button
             key={index}
             onClick={link.onClick}
-            className={effectClass}z
+            className={effectClass}
           >
             <Icon size={24} /> {!collapsed && title}
           </button>

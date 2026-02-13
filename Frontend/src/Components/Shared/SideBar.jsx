@@ -13,12 +13,12 @@ import { toast } from "sonner";
 import { setUser } from "@/redux/authSlice";
 import axios from "axios";
 import DarkMode from "../ui/DarkMode";
+import { AddIncome } from "../Dashboard/AddIncome";
 
 
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
-
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -72,47 +72,28 @@ const Sidebar = () => {
                             ]}
 
                         />
-                        <SidebarAccordion
+                        <SidebarElement
                             title="Income"
                             icon={MdAttachMoney}
                             effectClass={Effact}
-                            accordionEffact={AccordionEffact}
                             links={[
-                                { path: "/dashboard/income", label: "Add Income" },
-                                { path: "/dashboard/income/get", label: "Get Income" },
-                                // { path: "/dashboard/income/update", label: "Update Income" },
-                                // { path: "/dashboard/income/delete", label: "Delete Income" }
-
+                                { path: "/dashboard/income" }
                             ]} />
 
-                        <SidebarAccordion
+                        <SidebarElement
                             title="Expense"
                             icon={FaShoppingCart}
                             effectClass={Effact}
-                            accordionEffact={AccordionEffact}
                             links={[
-                                { path: "/dashboard/expense", label: "Add expense" },
-                                { path: "/dashboard/expense/get", label: "Get expense" },
-                                // { path: "/dashboard/expense/update", label: "Update expense" },
-                                // { path: "/dashboard/expense/delete", label: "Delete expense" }
-
-                            ]}
-
-                        />
-                        <SidebarAccordion
-                            title="Debt"
+                                { path: "/dashboard/expense" }
+                            ]} />
+                        <SidebarElement
+                            title="Accounting"
                             icon={Briefcase}
                             effectClass={Effact}
-                            accordionEffact={AccordionEffact}
                             links={[
-                                { path: "/dashboard/debt", label: "Add debt" },
-                                { path: "/dashboard/debt/get", label: "Get debt" },
-                                // { path: "/dashboard/debt/update", label: "Update debt" },
-                                // { path: "/dashboard/debt/delete", label: "Delete debt" }
-
-                            ]}
-
-                        />
+                                { path: "/dashboard/accounting" }
+                            ]} />
 
 
                         <SidebarElement
@@ -225,50 +206,31 @@ const Sidebar = () => {
                             }
                         ]}
                     />
-                    <SidebarAccordion
+                    <SidebarElement
                         title="Income"
                         icon={MdAttachMoney}
                         collapsed={collapsed}
                         effectClass={Effact}
-                        accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/income", label: "Add Income" },
-                            { path: "/dashboard/income/get", label: "Get Income" },
-                            // { path: "/dashboard/income/update", label: "Update Income" },
-                            // { path: "/dashboard/income/delete", label: "Delete Income" }
-
+                            { path: "/dashboard/income" }
                         ]} />
 
-                    <SidebarAccordion
+                    <SidebarElement
                         title="Expense"
                         icon={FaShoppingCart}
                         collapsed={collapsed}
                         effectClass={Effact}
-                        accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/expense", label: "Add expense" },
-                            { path: "/dashboard/expense/get", label: "Get expense" },
-                            // { path: "/dashboard/expense/update", label: "Update expense" },
-                            // { path: "/dashboard/expense/delete", label: "Delete expense" }
-
-                        ]}
-
-                    />
-                    <SidebarAccordion
-                        title="Debt"
+                            { path: "/dashboard/expense" }
+                        ]} />
+                    <SidebarElement
+                        title="Accounting"
                         icon={Briefcase}
                         collapsed={collapsed}
                         effectClass={Effact}
-                        accordionEffact={AccordionEffact}
                         links={[
-                            { path: "/dashboard/debt", label: "Add debt" },
-                            { path: "/dashboard/debt/get", label: "Get debt" },
-                            // { path: "/dashboard/debt/update", label: "Update debt" },
-                            // { path: "/dashboard/debt/delete", label: "Delete debt" }
-
-                        ]}
-
-                    />
+                            { path: "/dashboard/accounting" }
+                        ]} />
 
 
                     <SidebarElement
@@ -341,6 +303,8 @@ const Sidebar = () => {
 
                 </nav>
             </aside>
+
+
         </div>
     );
 };

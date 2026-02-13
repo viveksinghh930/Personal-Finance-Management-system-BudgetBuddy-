@@ -6,9 +6,9 @@ import { INCOME_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 
-const AddDebt = ({ onClose }) => {
+const AddBorrow = ({ onClose }) => {
     const [formData, setFormData] = useState({
-        borrowerName: "",
+        lenderName: "",
         amount: "",
         date: "",
         dueDate: "",
@@ -26,13 +26,13 @@ const AddDebt = ({ onClose }) => {
         e.preventDefault();
         try {
             dispatch(setLoading(true));
-            const response = await axios.post(`${INCOME_API_END_POINT}/addDebt`, formData, {
+            const response = await axios.post(`${INCOME_API_END_POINT}/addBorrow`, formData, {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true
             });
             if (response.data.success) {
                 toast.success(response.data.message, HandleMessageUISuccess());
-                setFormData({ borrowerName: "", amount: "", date: "", dueDate: "", interestRate: "", description: "", paymentMethod: "UPI" });
+                setFormData({ lenderName: "", amount: "", date: "", dueDate: "", interestRate: "", description: "", paymentMethod: "UPI" });
                 onClose && onClose();
             }
         } catch (error) {
@@ -48,20 +48,20 @@ const AddDebt = ({ onClose }) => {
 
     return (
         <div className="p-6">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Add Debt</h2>
-            <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm">Record money you've lent to others</p>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Add Borrow</h2>
+            <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm">Record money you've borrowed</p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                    <label className={LabelStyle}>Borrower Name</label>
+                    <label className={LabelStyle}>Lender Name</label>
                     <input
                         type="text"
-                        name="borrowerName"
-                        value={formData.borrowerName}
+                        name="lenderName"
+                        value={formData.lenderName}
                         onChange={handleChange}
                         className={InputStyle}
                         required
-                        placeholder="Who borrowed from you?"
+                        placeholder="Who did you borrow from?"
                     />
                 </div>
 
@@ -95,7 +95,7 @@ const AddDebt = ({ onClose }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <label className={LabelStyle}>Lent Date</label>
+                        <label className={LabelStyle}>Borrow Date</label>
                         <input
                             type="date"
                             name="date"
@@ -141,7 +141,7 @@ const AddDebt = ({ onClose }) => {
                         onChange={handleChange}
                         className={`${InputStyle} h-28 resize-none`}
                         required
-                        placeholder="Purpose of lending..."
+                        placeholder="Purpose of borrowing..."
                     />
                 </div>
 
@@ -149,11 +149,11 @@ const AddDebt = ({ onClose }) => {
                     type="submit"
                     className="w-full bg-[#257c8a] hover:bg-[#1b5d6a] text-white font-bold py-3 rounded-md transition duration-300 shadow-md active:scale-[0.98]"
                 >
-                    Add Debt Record
+                    Add Borrow Record
                 </button>
             </form>
         </div>
     );
 };
 
-export { AddDebt };
+export default AddBorrow;

@@ -7,9 +7,15 @@ import DeshBord from './Components/Dashboard/DeshBord';
 import { ThemeProvider } from './Components/DarkLiteMood/ThemeProvider';
 import  {AddIncome}  from './Components/Dashboard/AddIncome';
 import { AddExpance } from './Components/Dashboard/AddExpance';
-import { AddDebt } from './Components/Dashboard/AddDebt';
 import Expense from './Components/Dashboard/Expense';
-// import Google from './Components/Auth/google.jsx';
+import IncomeManagement from './Components/Dashboard/IncomeManagement';
+import ExpenseManagement from './Components/Dashboard/ExpenseManagement';
+import AccountingManagement from './Components/Dashboard/AccountingManagement';
+import Reports from './Components/Dashboard/Reports';
+import Categories from './Components/Dashboard/Categories';
+import Analytics from './Components/Dashboard/Analytics';
+import Settings from './Components/Dashboard/Settings';
+
 const appRouter = createBrowserRouter([
   {
     path: '/',
@@ -29,19 +35,35 @@ const appRouter = createBrowserRouter([
   },
   {
     path: '/dashboard/income',
-    element: <AddIncome/>
+    element: <IncomeManagement/>
   },
   {
     path: '/dashboard/expense',
-    element: <AddExpance/>
+    element: <ExpenseManagement/>
   },
   {
     path: '/dashboard/expense/get',
     element: <Expense/>
   },
   {
-    path: '/dashboard/debt',
-    element: <AddDebt/>
+    path: '/dashboard/accounting',
+    element: <AccountingManagement/>
+  },
+  {
+    path: '/dashboard/reports',
+    element: <Reports/>
+  },
+  {
+    path: '/dashboard/categories',
+    element: <Categories/>
+  },
+  {
+    path: '/dashboard/analytics',
+    element: <Analytics/>
+  },
+  {
+    path: '/dashboard/settings',
+    element: <Settings/>
   }
 ]);
 

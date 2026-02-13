@@ -4,27 +4,30 @@ import { TrendingUp, TrendingDown, DollarSign, Users } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import AddBorrow from "./AddBorrow";
 import { AddDebt } from "./AddDebt";
+import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
+import DeshboardNavbar from "./DeshboardNavbar";
 
 const AccountingManagement = () => {
     const [activeTab, setActiveTab] = useState("debt");
     const [isAddOpen, setIsAddOpen] = useState(false);
 
     return (
-        <div className="flex">
+        <div className={`${darkThemeColor} flex min-h-screen md:ml-72 bg-gray-50 dark:bg-gray-900`}>
             <Sidebar />
-            <div className="flex-1 p-6 space-y-6 overflow-auto">
-                <div>
-                    <h1 className="text-3xl font-bold">Accounting Dashboard</h1>
-                    <p className="text-gray-600 dark:text-gray-400">Manage your borrowings and debts in one place</p>
-                </div>
-
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <div className="flex-1 overflow-x-hidden">
+                <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <DeshboardNavbar 
+                        title="Accounting Dashboard" 
+                        subtitle="Manage your borrowings and debts in one place" 
+                    />
+                    
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between mb-4">
                             <div>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">TOTAL DEBT (OWED)</p>
-                                <h2 className="text-4xl font-bold mt-2">$14,250.00</h2>
+                                <h2 className="text-4xl font-bold mt-2 text-gray-900 dark:text-white">$14,250.00</h2>
                             </div>
                             <div className="bg-red-100 dark:bg-red-900 p-3 rounded-lg">
                                 <TrendingDown className="text-red-600" size={28} />
@@ -41,11 +44,11 @@ const AccountingManagement = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between mb-4">
                             <div>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">TOTAL BORROWED (LENT OUT)</p>
-                                <h2 className="text-4xl font-bold mt-2">$8,230.00</h2>
+                                <h2 className="text-4xl font-bold mt-2 text-gray-900 dark:text-white">$8,230.00</h2>
                             </div>
                             <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg">
                                 <TrendingUp className="text-green-600" size={28} />
@@ -64,9 +67,9 @@ const AccountingManagement = () => {
                 </div>
 
                 {/* New Entry Section */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700 mt-6">
                     <div className="mb-6">
-                        <h2 className="text-2xl font-bold mb-2">New Entry</h2>
+                        <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">New Entry</h2>
                         <p className="text-gray-600 dark:text-gray-400">Record a debt or a loan transaction</p>
                     </div>
 
@@ -105,15 +108,15 @@ const AccountingManagement = () => {
                 </div>
 
                 {/* Recent Activity */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700 mt-6">
                     <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold">Recent Activity</h2>
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Recent Activity</h2>
                         <button className="text-[#257c8a] hover:underline">View Full Report →</button>
                     </div>
                     
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="border-b">
+                            <thead className="border-b border-gray-200 dark:border-gray-700">
                                 <tr className="text-left text-gray-600 dark:text-gray-400 text-sm">
                                     <th className="pb-3">COUNTERPARTY</th>
                                     <th className="pb-3">NATURE</th>
@@ -123,15 +126,15 @@ const AccountingManagement = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="border-b">
+                                <tr className="border-b border-gray-200 dark:border-gray-700">
                                     <td className="py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="bg-[#257c8a] text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">
                                                 AM
                                             </div>
                                             <div>
-                                                <p className="font-semibold">Alice Morgan</p>
-                                                <p className="text-sm text-gray-500">Business</p>
+                                                <p className="font-semibold text-gray-900 dark:text-white">Alice Morgan</p>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400">Business</p>
                                             </div>
                                         </div>
                                     </td>
@@ -141,7 +144,7 @@ const AccountingManagement = () => {
                                         </span>
                                     </td>
                                     <td className="py-4 text-gray-700 dark:text-gray-300">Dec 28, 2023</td>
-                                    <td className="py-4 font-bold text-lg">$2,500.00</td>
+                                    <td className="py-4 font-bold text-lg text-gray-900 dark:text-white">$2,500.00</td>
                                     <td className="py-4">
                                         <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">
                                             Outstanding
@@ -149,7 +152,7 @@ const AccountingManagement = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan="5" className="text-center py-8 text-gray-500">No more transactions</td>
+                                    <td colSpan="5" className="text-center py-8 text-gray-500 dark:text-gray-400">No more transactions</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -166,8 +169,9 @@ const AccountingManagement = () => {
                         )}
                     </SheetContent>
                 </Sheet>
+                </div>
             </div>
-        </div>
+       </div>
     );
 };
 

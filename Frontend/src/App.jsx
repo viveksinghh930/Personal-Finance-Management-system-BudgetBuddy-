@@ -15,6 +15,8 @@ import Reports from './Components/Dashboard/Reports';
 import Categories from './Components/Dashboard/Categories';
 import Analytics from './Components/Dashboard/Analytics';
 import Settings from './Components/Dashboard/Settings';
+import Profile from './Components/Dashboard/Profile';
+import Notifications from './Components/Dashboard/Notifications';
 
 const appRouter = createBrowserRouter([
   {
@@ -64,6 +66,14 @@ const appRouter = createBrowserRouter([
   {
     path: '/dashboard/settings',
     element: <Settings/>
+  },
+  {
+    path: '/profile',
+    element: <Profile/>
+  },
+  {
+    path: '/notifications',
+    element: <Notifications/>
   }
 ]);
 

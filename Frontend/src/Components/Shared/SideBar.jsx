@@ -179,7 +179,7 @@ const Sidebar = () => {
             </Sheet>
 
             {/* Desktop Sidebar */}
-            <aside className={cn(` dark:bg-gray-800 hidden md:flex flex-col bg-gray-100 h-screen   p-9 transition-all`, collapsed ? "w-28" : "w-72")}>
+            <aside className={cn(`dark:bg-gray-800 hidden md:flex flex-col bg-gray-100 h-screen fixed left-0 top-0 p-9 transition-all overflow-y-auto`, collapsed ? "w-28" : "w-72")}>
                 <div className="flex gap-3">
                     {/* <button onClick={() => setCollapsed(!collapsed)} className="p-2 self-end rounded-md bg-[#257c8a] text-white">
                         <Menu size={24} />

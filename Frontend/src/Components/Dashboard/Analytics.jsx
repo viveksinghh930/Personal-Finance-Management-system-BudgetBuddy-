@@ -1,46 +1,49 @@
 import Sidebar from "../Shared/SideBar";
 import { BarChart, TrendingUp, PieChart, Activity } from "lucide-react";
+import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
+import DeshboardNavbar from "./DeshboardNavbar";
 
 const Analytics = () => {
     return (
-        <div className="flex">
+        <div className={`${darkThemeColor} flex min-h-screen md:ml-72 bg-gray-50 dark:bg-gray-900`}>
             <Sidebar />
-            <div className="flex-1 p-6 space-y-6 overflow-auto">
-                <div>
-                    <h1 className="text-3xl font-bold">Analytics</h1>
-                    <p className="text-gray-600 dark:text-gray-400">Detailed insights into your financial patterns</p>
-                </div>
-
-                {/* Key Metrics */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <div className="flex-1 overflow-x-hidden">
+                <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <DeshboardNavbar 
+                        title="Analytics" 
+                        subtitle="Detailed insights into your financial patterns" 
+                    />
+                    
+                    {/* Key Metrics */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Avg Monthly Income</p>
-                                <h2 className="text-2xl font-bold mt-2">$12,450</h2>
+                                <h2 className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">$12,450</h2>
                             </div>
                             <TrendingUp className="text-green-500" size={32} />
                         </div>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Avg Monthly Expense</p>
-                                <h2 className="text-2xl font-bold mt-2">$8,320</h2>
+                                <h2 className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">$8,320</h2>
                             </div>
                             <Activity className="text-red-500" size={32} />
                         </div>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Highest Expense</p>
-                                <h2 className="text-2xl font-bold mt-2">Food</h2>
+                                <h2 className="text-2xl font-bold mt-2 text-gray-900 dark:text-white">Food</h2>
                             </div>
                             <PieChart className="text-orange-500" size={32} />
                         </div>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Growth Rate</p>
@@ -52,39 +55,39 @@ const Analytics = () => {
                 </div>
 
                 {/* Charts */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <h2 className="text-xl font-bold mb-4">Income vs Expense Trend</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                        <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Income vs Expense Trend</h2>
                         <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-                            <p className="text-gray-500">Line Chart</p>
+                            <p className="text-gray-500 dark:text-gray-400">Line Chart</p>
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <h2 className="text-xl font-bold mb-4">Expense by Category</h2>
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                        <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Expense by Category</h2>
                         <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-                            <p className="text-gray-500">Pie Chart</p>
+                            <p className="text-gray-500 dark:text-gray-400">Pie Chart</p>
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <h2 className="text-xl font-bold mb-4">Monthly Comparison</h2>
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                        <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Monthly Comparison</h2>
                         <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-                            <p className="text-gray-500">Bar Chart</p>
+                            <p className="text-gray-500 dark:text-gray-400">Bar Chart</p>
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <h2 className="text-xl font-bold mb-4">Savings Growth</h2>
+                    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                        <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Savings Growth</h2>
                         <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-                            <p className="text-gray-500">Area Chart</p>
+                            <p className="text-gray-500 dark:text-gray-400">Area Chart</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Insights */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                    <h2 className="text-xl font-bold mb-4">Financial Insights</h2>
+                <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700 mt-6">
+                    <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Financial Insights</h2>
                     <div className="space-y-4">
                         <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
                             <p className="font-semibold text-green-800 dark:text-green-300">Great Job!</p>
@@ -100,8 +103,10 @@ const Analytics = () => {
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
-        </div>
+            </div>
+        
     );
 };
 

@@ -100,7 +100,7 @@ const DeshBord = () => {
   ]
 
   return (
-    <div className={`${darkThemeColor} flex min-h-screen bg-gray-50 dark:bg-gray-900`}>
+    <div className={`${darkThemeColor} flex min-h-screen md:ml-72 bg-gray-50 dark:bg-gray-900`}>
       <Sidebar />
 
       <div className='flex-1 overflow-x-hidden'>
@@ -110,7 +110,7 @@ const DeshBord = () => {
           {/* Top 4 Cards with Mini Charts */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
             {topCardsData.map((card) => (
-              <div key={card.id} className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div key={card.id} className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{card.title}</p>
@@ -172,7 +172,7 @@ const DeshBord = () => {
             {/* Left Column - Financial Statistics & Recent Activities */}
             <div className="xl:col-span-2 space-y-6">
               {/* Financial Statistics */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Financial statistics</h2>
                   <div className="flex gap-4 text-sm">

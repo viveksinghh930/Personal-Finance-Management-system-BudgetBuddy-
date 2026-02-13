@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Sidebar from "../Shared/SideBar";
 import { Tag, Plus, Edit, Trash2 } from "lucide-react";
+import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
+import DeshboardNavbar from "./DeshboardNavbar";
 
 const Categories = () => {
     const [categories] = useState([
@@ -12,44 +14,47 @@ const Categories = () => {
     ]);
 
     return (
-        <div className="flex">
+        <div className={`${darkThemeColor} flex min-h-screen md:ml-72 bg-gray-50 dark:bg-gray-900`}>
             <Sidebar />
-            <div className="flex-1 p-6 space-y-6 overflow-auto">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="text-3xl font-bold">Categories</h1>
-                        <p className="text-gray-600 dark:text-gray-400">Manage your income and expense categories</p>
+            <div className="flex-1 overflow-x-hidden">
+                <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <DeshboardNavbar 
+                        title="Categories" 
+                        subtitle="Manage your income and expense categories" 
+                    />
+                    
+                    {/* Add Category Button */}
+                    <div className="flex justify-end mb-6">
+                        <button className="bg-[#257c8a] hover:bg-[#1f6a77] text-white px-6 py-3 rounded-lg flex items-center gap-2">
+                            <Plus size={20} />
+                            Add Category
+                        </button>
                     </div>
-                    <button className="bg-[#257c8a] hover:bg-[#1f6a77] text-white px-6 py-3 rounded-lg flex items-center gap-2">
-                        <Plus size={20} />
-                        Add Category
-                    </button>
-                </div>
 
-                {/* Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Total Categories</p>
-                        <h2 className="text-3xl font-bold mt-2">{categories.length}</h2>
+                    {/* Stats */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Total Categories</p>
+                            <h2 className="text-3xl font-bold mt-2 text-gray-900 dark:text-white">{categories.length}</h2>
+                        </div>
+                        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Income Categories</p>
+                            <h2 className="text-3xl font-bold mt-2 text-green-600">
+                                {categories.filter(c => c.type === "Income").length}
+                            </h2>
+                        </div>
+                        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Expense Categories</p>
+                            <h2 className="text-3xl font-bold mt-2 text-red-600">
+                                {categories.filter(c => c.type === "Expense").length}
+                            </h2>
+                        </div>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Income Categories</p>
-                        <h2 className="text-3xl font-bold mt-2 text-green-600">
-                            {categories.filter(c => c.type === "Income").length}
-                        </h2>
-                    </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Expense Categories</p>
-                        <h2 className="text-3xl font-bold mt-2 text-red-600">
-                            {categories.filter(c => c.type === "Expense").length}
-                        </h2>
-                    </div>
-                </div>
 
-                {/* Categories Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Categories Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                     {categories.map((category) => (
-                        <div key={category.id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div key={category.id} className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700 hover:shadow-lg transition">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
                                     <div 
@@ -59,8 +64,8 @@ const Categories = () => {
                                         <Tag style={{ color: category.color }} size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-lg">{category.name}</h3>
-                                        <p className="text-sm text-gray-500">{category.type}</p>
+                                        <h3 className="font-bold text-lg text-gray-900 dark:text-white">{category.name}</h3>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">{category.type}</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,6 +82,7 @@ const Categories = () => {
                             </div>
                         </div>
                     ))}
+                    </div>
                 </div>
             </div>
         </div>

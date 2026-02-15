@@ -6,12 +6,12 @@ import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
-import { GOOGLE_CLIENT_ID, USER_API_END_POINT } from "@/utils/constant";
+import { GOOGLE_CLIENT_ID } from "@/utils/constant";
 import { toast } from "sonner";
-import axios from "axios";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { darkThemeColor, HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
+import { useRegisterMutation } from "@/redux/api/userApi";
 
 const SignUp = () => {
   const [input, setInput] = useState({
@@ -26,6 +26,8 @@ const SignUp = () => {
   const { loading, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [register] = useRegisterMutation();
 
   const changeEventHandler = (e) => setInput({ ...input, [e.target.name]: e.target.value });
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
@@ -54,26 +56,15 @@ const SignUp = () => {
       setErrors(newErrors);
       return;
     }
-
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${USER_API_END_POINT}/register`, {
-        fullName: input.name,
-        email: input.email,
-        phoneNumber: input.phoneNumber,
-        password: input.password,
-        isGoogleUser: false
-      }, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-
-      if (res.data.success) {
-        toast.success(res.data.message, HandleMessageUISuccess());
-        navigate("/dashboard");
+      const result = await register({ fullName: input.name, email: input.email, phoneNumber: input.phoneNumber, password: input.password }).unwrap();
+      if (result.success) {
+        toast.success(result.message, HandleMessageUISuccess());
+        navigate("/login");
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "An error occurred", HandleMessageUIError());
+      toast.error(error?.data?.message || "Registration failed", HandleMessageUIError());
     } finally {
       dispatch(setLoading(false));
     }
@@ -83,18 +74,16 @@ const SignUp = () => {
     const decoded = jwtDecode(response.credential);
     const { name, email, sub } = decoded;
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/register`, {
-        fullName: name,
-        email,
-        googleSub: sub,
-        isGoogleUser: true,
-      });
-      if (res.data.success) {
-        toast.success("Google registration successful!", HandleMessageUISuccess());
-        navigate("/dashboard");
+      dispatch(setLoading(true));
+      const result = await register({ fullName: name, email, googleSub: sub, isGoogleUser: true }).unwrap();
+      if (result.success) {
+        toast.success(result.message, HandleMessageUISuccess());
+        navigate("/login");
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Google registration failed", HandleMessageUIError());
+      toast.error(error?.data?.message || "Google registration failed", HandleMessageUIError());
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 

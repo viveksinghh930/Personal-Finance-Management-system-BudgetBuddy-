@@ -62,3 +62,7 @@ config/local.js
 # Documentation (Optional - Remove if you want to commit)
 PROJECT_DOCUMENTATION.md
 DARK_MODE_IMPLEMENTATION.md
+COMPLETE_RTK_MIGRATION_GUIDE.md
+RTK_QUERY_GUIDE.md
+DEBUG_INCOME_ADD.md
+AUTHENTICATION_FIX.md

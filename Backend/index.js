@@ -13,8 +13,7 @@ dotenv.config();
 
 const app = express();
 
-
-
+// Middleware FIRST
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -27,14 +26,20 @@ app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
 
+// Routes AFTER middleware
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'Backend is working!' });
+});
 
-// app.get('/', (req, res) => {
-//     res.send('Hello World');
-// });
 app.use('/api/user', userRoutes);
 app.use('/api/income', incomeRoutes);
 app.use('/api/expense', expenseRoutes);
 app.use('/api/borrow', borrowRoutes);
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ message: `Route ${req.url} not found` });
+});
 app.listen(PORT, () => {
     connectDB();
     console.log(`Server is running on port ${PORT}`);

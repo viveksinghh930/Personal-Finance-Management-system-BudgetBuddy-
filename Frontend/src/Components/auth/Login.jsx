@@ -8,14 +8,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaArrowLeft } from "react-icons/fa";
 import { setLoading, setUser } from "@/redux/authSlice";
-import axios from "axios";
-import { GOOGLE_CLIENT_ID, USER_API_END_POINT } from "@/utils/constant";
+import { GOOGLE_CLIENT_ID } from "@/utils/constant";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { darkThemeColor, HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
-import Navbar from "../Shared/Navbar";
+import { useLoginMutation } from "@/redux/api/userApi";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +22,8 @@ const Login = () => {
     const { loading, user } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [login] = useLoginMutation();
 
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -35,37 +35,35 @@ const Login = () => {
             toast.error("Please fill in all fields.", HandleMessageUIError());
             return;
         }
-
         try {
             dispatch(setLoading(true));
-            const response = await axios.post(`${USER_API_END_POINT}/login`, input, {
-                headers: { "Content-Type": "application/json" },
-                withCredentials: true,
-            });
-
-            if (response.data.success) {
-                dispatch(setUser(response.data.user));
+            const result = await login(input).unwrap();
+            if (result.success) {
+                dispatch(setUser(result.user));
+                toast.success(result.message, HandleMessageUISuccess());
                 navigate("/dashboard");
-                toast.success(response.data.message, HandleMessageUISuccess());
             }
         } catch (error) {
-            toast.error(error?.response?.data?.message || "Something went wrong");
+            toast.error(error?.data?.message || "Login failed", HandleMessageUIError());
         } finally {
             dispatch(setLoading(false));
         }
     };
 
-    const handleGoogleSuccess = (response) => {
-        const decoded = jwtDecode(response?.credential);
-        axios.post(`${USER_API_END_POINT}/login`, { googleToken: response.credential })
-            .then((res) => {
-                if (res.data.success) {
-                    dispatch(setUser(res.data.user));
-                    navigate("/dashboard");
-                    toast.success(res.data.message, HandleMessageUISuccess());
-                }
-            })
-            .catch(() => toast.error("Google login failed", HandleMessageUIError()));
+    const handleGoogleSuccess = async (response) => {
+        try {
+            dispatch(setLoading(true));
+            const result = await login({ googleToken: response.credential }).unwrap();
+            if (result.success) {
+                dispatch(setUser(result.user));
+                toast.success(result.message, HandleMessageUISuccess());
+                navigate("/dashboard");
+            }
+        } catch (error) {
+            toast.error(error?.data?.message || "Google login failed", HandleMessageUIError());
+        } finally {
+            dispatch(setLoading(false));
+        }
     };
     const handleGoogleError = (error) => {
         console.log("Google Login Error", error);

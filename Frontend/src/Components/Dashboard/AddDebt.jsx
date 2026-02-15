@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
-import axios from "axios";
-import { INCOME_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 
@@ -24,23 +22,6 @@ const AddDebt = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            dispatch(setLoading(true));
-            const response = await axios.post(`${INCOME_API_END_POINT}/addDebt`, formData, {
-                headers: { "Content-Type": "application/json" },
-                withCredentials: true
-            });
-            if (response.data.success) {
-                toast.success(response.data.message, HandleMessageUISuccess());
-                setFormData({ borrowerName: "", amount: "", date: "", dueDate: "", interestRate: "", description: "", paymentMethod: "UPI" });
-                onClose && onClose();
-            }
-        } catch (error) {
-            console.log("Network Error", error);
-            toast.error(error?.response?.data?.message || "Something went wrong", HandleMessageUIError());
-        } finally {
-            dispatch(setLoading(false));
-        }
     };
 
     const LabelStyle = "block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1";

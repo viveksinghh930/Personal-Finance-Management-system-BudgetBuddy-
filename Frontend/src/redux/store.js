@@ -1,43 +1,56 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
-// import jobSlice from './jobSlice';
-// import companySlice from './companySlice';
-// import applicationSlice from './applicationSlice';
+import { apiSlice } from "./api/apiSlice";
 
 import {
-    persistReducer,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
-} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
+
+// 🔹 Persist Config (Sirf auth ko persist karenge)
 const persistConfig = {
-    key: 'root',
-    version: 1,
-    storage,
-}
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ["auth"], // 👈 Sirf auth persist hoga
+};
 
+
+// 🔹 Combine Reducers
 const rootReducer = combineReducers({
-    auth: authSlice,
-    // job: jobSlice
-    // company: companySlice,
-    // application: applicationSlice
-})
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-
-const store = configureStore({
-    reducer: persistedReducer,
-    // reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
-        }),
+  auth: authSlice,
+  [apiSlice.reducerPath]: apiSlice.reducer, // 👈 RTK Query reducer add
 });
-export default store;
 
+
+// 🔹 Persisted Reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+
+// 🔹 Store Create
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
+      },
+    }).concat(apiSlice.middleware), // 👈 RTK Query middleware add
+});
+
+
+export default store;

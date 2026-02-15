@@ -8,12 +8,12 @@ import { MdAttachMoney } from "react-icons/md";
 import { SidebarAccordion, SidebarElement } from "./SidebarAccordion";
 import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 import { useDispatch } from "react-redux";
-import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { setUser } from "@/redux/authSlice";
-import axios from "axios";
 import DarkMode from "../ui/DarkMode";
 import { AddIncome } from "../Dashboard/AddIncome";
+import { useLogoutMutation } from "@/redux/api/userApi";
+import { HandleMessageUISuccess, HandleMessageUIError } from "../DarkLiteMood/ThemeProvider";
 
 
 
@@ -23,17 +23,18 @@ const Sidebar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [logout] = useLogoutMutation();
+
     const logoutHandler = async () => {
         try {
-            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
-            if (res.data.success) {
+            const result = await logout().unwrap();
+            if (result.success) {
                 dispatch(setUser(null));
-                navigate('/');
-                toast.success(res.data.message);
+                toast.success(result.message, HandleMessageUISuccess());
+                navigate("/login");
             }
         } catch (error) {
-            console.log(error);
-            toast.error(error.response?.data?.message || 'An error occurred');
+            toast.error(error?.data?.message || "Logout failed", HandleMessageUIError());
         }
     };
 

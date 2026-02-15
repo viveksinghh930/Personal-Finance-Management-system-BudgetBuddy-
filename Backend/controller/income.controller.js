@@ -5,6 +5,14 @@ export const addIncome = async (req, resp) => {
         const { category, amount, date, description, paymentMethod } = req.body;
         const userId = req.userId;
 
+        // Check if user is authenticated
+        if (!userId) {
+            return resp.status(401).json({
+                message: "User not authenticated",
+                success: false,
+            });
+        }
+
         console.log(req.body);
         
         if (!category || !amount || !date || !description || !paymentMethod) {

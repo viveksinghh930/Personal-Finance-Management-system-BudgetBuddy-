@@ -3,9 +3,16 @@ import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { addIncome, incomeDelete, getIncomeByUserId, updateIncome, calculateTotalIncome } from "../controller/income.controller.js";
 
 const router = express.Router();
-router.route("/addIncome").post( addIncome);
-router.route('/getIncome').get(isAuthenticated, getIncomeByUserId);
-router.route('/updateIncome/:id').put(isAuthenticated, updateIncome);
-router.route('/deleteIncome/:id').delete(isAuthenticated, incomeDelete);
-router.route('/getTotal').get(isAuthenticated, calculateTotalIncome);
+
+// Test route
+router.get('/test', (req, res) => {
+    res.json({ message: 'Income routes working!' });
+});
+
+router.post("/", isAuthenticated, addIncome);
+router.get('/', isAuthenticated, getIncomeByUserId);
+router.put('/:id', isAuthenticated, updateIncome);
+router.delete('/:id', isAuthenticated, incomeDelete);
+router.get('/total', isAuthenticated, calculateTotalIncome);
+
 export default router;

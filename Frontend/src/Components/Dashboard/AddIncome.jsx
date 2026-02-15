@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
-import axios from "axios";
-import { INCOME_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 import { X } from "lucide-react";
-
+import CategorySelector from "./CategorySelector";
+import { useAddIncomeMutation } from "@/redux/api/incomeApi";
 
 const AddIncome = ({ onClose }) => {
     const [formData, setFormData] = useState({
@@ -14,9 +13,10 @@ const AddIncome = ({ onClose }) => {
         date: "",
         category: "",
         description: "",
-        paymentMethod: "UPI",
+        paymentMethod: "Cash",
     });
     const dispatch = useDispatch();
+    const [addIncome, { isLoading }] = useAddIncomeMutation();
 
     const handleChange = async (e) => {
         const { name, value } = e.target;
@@ -26,43 +26,28 @@ const AddIncome = ({ onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Form Data Submitted:", formData);
-
+        
         try {
-            dispatch(setLoading(true))
-            const inputData = new FormData();
-            inputData.append("amount", formData.amount)
-            inputData.append("date", formData.date)
-            inputData.append("category", formData.category)
-            inputData.append("description", formData.description)
-            inputData.append("paymentMethod", formData.paymentMethod)
-            console.log(inputData);
-
-            for (let [key, value] of inputData.entries()) {
-                console.log(key, value);
-
-            }
-            const response = await axios.post(`${INCOME_API_END_POINT}/addIncome`, inputData, {
-                headers: { "Content-Type": "application/json" },
-                withCredentials: true
-            });
-            if (response.data.success) {
-                toast.success(response.data.message, HandleMessageUISuccess());
+            dispatch(setLoading(true));
+            const result = await addIncome(formData).unwrap();
+            
+            if (result.success) {
+                toast.success(result.message, HandleMessageUISuccess());
                 setFormData({
                     amount: "",
                     date: "",
                     category: "",
                     description: "",
-                    paymentMethod: "UPI",
+                    paymentMethod: "Cash",
                 });
                 if (onClose) onClose();
             }
-
         } catch (error) {
-            console.log("Network Error", error);
-            toast.error(error?.response?.data?.message, HandleMessageUIError())
-
+            console.error("Error adding income:", error);
+            toast.error(error?.data?.message || "Error adding income", HandleMessageUIError());
+        } finally {
+            dispatch(setLoading(false));
         }
-
     };
 
     const LabelStyle = "block font-semibold text-gray-700 dark:text-gray-300";
@@ -74,7 +59,7 @@ const AddIncome = ({ onClose }) => {
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                    Add Transaction
+                    Add Income
                 </h2>
                 {onClose && (
                     <button
@@ -118,23 +103,20 @@ const AddIncome = ({ onClose }) => {
                         onChange={handleChange}
                         className={InputStyle}
                     >
-                        <option value="UPI">UPI</option>
-                        <option value="Banking">Banking</option>
                         <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
 
-                <AddComponent
-                    label="Category"
-                    type="text"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    LabelStyle={LabelStyle}
-                    InputStyle={InputStyle}
-                    required={true}
-                />
+                <div>
+                    <label className={LabelStyle}>Category:</label>
+                    <CategorySelector
+                        type="Income"
+                        value={formData.category}
+                        onChange={(value) => setFormData({ ...formData, category: value })}
+                    />
+                </div>
 
                 <AddComponent
                     label="Description"
@@ -151,7 +133,7 @@ const AddIncome = ({ onClose }) => {
                     type="submit"
                     className="w-full bg-[#14B8A6] hover:bg-[#0d9488] text-white font-bold py-3 rounded-lg transition mt-6"
                 >
-                    Save
+                    {isLoading ? "Adding..." : "Add Income"}
                 </button>
             </form>
         </div>

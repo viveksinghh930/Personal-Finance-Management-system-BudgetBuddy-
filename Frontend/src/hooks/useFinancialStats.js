@@ -48,7 +48,7 @@ const useFinancialStats = (data, viewMode, type = 'income') => {
         setStats({
             total,
             average: type === 'income' ? (filtered.length > 0 ? total / filtered.length : 0) : 0,
-            budgetLeft: type === 'expense' ? (10000 - total) : 0,
+            budgetLeft: type === 'expense' ? Math.max(0, total * 0.2) : 0,
             highest
         });
     };
@@ -61,19 +61,24 @@ const useFinancialStats = (data, viewMode, type = 'income') => {
         if (result.length === 0) {
             if (type === 'income') {
                 return [
-                    { name: 'Salary', value: 50000 },
-                    { name: 'Freelance', value: 25000 },
-                    { name: 'Investment', value: 15000 },
-                    { name: 'Business', value: 30000 },
-                    { name: 'Other', value: 10000 }
+                    { name: 'Salary', value: 0 },
+                    { name: 'Freelance', value: 0 },
+                    { name: 'Business', value: 0 },
+                    { name: 'Investment', value: 0 },
+                    { name: 'Rental Income', value: 0 },
+                    { name: 'Other Income', value: 0 }
                 ];
             } else {
                 return [
-                    { name: 'Food', value: 3500 },
-                    { name: 'Transport', value: 2000 },
-                    { name: 'Entertainment', value: 1500 },
-                    { name: 'Shopping', value: 2500 },
-                    { name: 'Bills', value: 1800 }
+                    { name: 'Food & Dining', value: 0 },
+                    { name: 'Transportation', value: 0 },
+                    { name: 'Shopping', value: 0 },
+                    { name: 'Entertainment', value: 0 },
+                    { name: 'Bills & Utilities', value: 0 },
+                    { name: 'Healthcare', value: 0 },
+                    { name: 'Education', value: 0 },
+                    { name: 'Rent', value: 0 },
+                    { name: 'Other Expense', value: 0 }
                 ];
             }
         }

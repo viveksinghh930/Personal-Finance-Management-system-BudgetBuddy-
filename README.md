@@ -44,18 +44,22 @@ PFM-System/
 - ✅ Transaction History
 - ✅ Dark Mode Support
 - ✅ Fully Responsive Design
+- ✅ RTK Query Integration (Complete Migration)
+- ✅ Category Management System
+- ✅ Real-time Data Updates
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 - React 18
 - Vite
-- Redux Toolkit
-- React Router DOM
+- Redux Toolkit + RTK Query
+- React Router DOM v6
 - Recharts (Charts)
 - Tailwind CSS
 - Shadcn UI Components
-- Axios
+- Sonner (Toast Notifications)
+- Lucide Icons
 
 ### Backend
 - Node.js
@@ -115,42 +119,66 @@ npm run dev
 ### User Routes
 - POST `/api/user/register` - Register new user
 - POST `/api/user/login` - Login user
+- GET `/api/user/logout` - Logout user
 - GET `/api/user/profile` - Get user profile
 
 ### Income Routes
-- POST `/api/income/add` - Add income
-- GET `/api/income/all` - Get all income
+- POST `/api/income/addIncome` - Add income
+- GET `/api/income/getAllIncome` - Get all income
 - DELETE `/api/income/:id` - Delete income
 
 ### Expense Routes
-- POST `/api/expense/add` - Add expense
-- GET `/api/expense/all` - Get all expenses
+- POST `/api/expense` - Add expense
+- GET `/api/expense` - Get all expenses
+- PUT `/api/expense/:id` - Update expense
 - DELETE `/api/expense/:id` - Delete expense
 
 ### Borrow Routes
-- POST `/api/borrow/add` - Add borrow/debt
-- GET `/api/borrow/all` - Get all borrows
+- POST `/api/borrow` - Add borrow/debt
+- GET `/api/borrow` - Get all borrows
+- GET `/api/borrow/total` - Get total stats
+- PUT `/api/borrow/:id` - Update borrow
 - DELETE `/api/borrow/:id` - Delete borrow
 
 ## 🎨 Component Structure
 
 ### Dashboard Components
 - `DeshBord.jsx` - Main dashboard with charts
-- `AddIncome.jsx` - Add income form
-- `AddExpense.jsx` - Add expense form
-- `AddDebt.jsx` - Add debt form
-- `Borrow.jsx` - Borrow management
-- `Expense.jsx` - Expense list
+- `IncomeManagement.jsx` - Income tracking (RTK Query)
+- `ExpenseManagement.jsx` - Expense tracking (RTK Query)
+- `AccountingManagement.jsx` - Borrow/Debt management (RTK Query)
+- `AddIncome.jsx` - Add income form (RTK Query)
+- `AddExpance.jsx` - Add/Edit expense form (RTK Query)
+- `AddBorrow.jsx` - Add borrow form (RTK Query)
+- `CategorySelector.jsx` - Reusable category selector
+- `Reports.jsx` - Financial reports
+- `Analytics.jsx` - Financial analytics
+- `Categories.jsx` - Category management
+- `Settings.jsx` - User settings
 
 ### Shared Components
-- `Navbar.jsx` - Top navigation
-- `Sidebar.jsx` - Side navigation
+- `DeshboardNavbar.jsx` - Top navigation
+- `SideBar.jsx` - Side navigation (RTK Query logout)
 - `Footer.jsx` - Footer section
+- `ThemeProvider.jsx` - Dark mode management
+
+### Auth Components
+- `Login.jsx` - Login page (RTK Query)
+- `SignUp.jsx` - Registration page (RTK Query)
 
 ### UI Components (Shadcn)
 - Button, Card, Input, Label
 - Dropdown, Tabs, Sheet
 - Avatar, Checkbox, Accordion
+
+### Redux Structure
+- `store.js` - Redux store with RTK Query
+- `authSlice.js` - Auth state management
+- `api/apiSlice.js` - Base API configuration
+- `api/incomeApi.js` - Income endpoints
+- `api/expenseApi.js` - Expense endpoints
+- `api/borrowApi.js` - Borrow endpoints
+- `api/authApi.js` - Auth endpoints
 
 ## 🔒 Environment Variables
 
@@ -216,6 +244,26 @@ npm run dev
 cd Frontend
 npm run build
 ```
+
+## 📚 Documentation
+
+For complete project documentation including:
+- Detailed component breakdown
+- RTK Query migration guide
+- API endpoints reference
+- Data models and schemas
+- Design system guidelines
+
+See: `COMPLETE_PROJECT_DOCUMENTATION.md`
+
+## 🔄 RTK Query Migration Status
+
+✅ **Completed** - All components migrated from Axios to RTK Query
+- Income Management
+- Expense Management
+- Borrow/Debt Management
+- Authentication (Login, SignUp, Logout)
+- Auto-caching and refetching enabled
 
 ## 📄 License
 

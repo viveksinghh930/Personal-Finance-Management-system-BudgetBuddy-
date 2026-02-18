@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CategorySelector from "./CategorySelector";
 import { X } from "lucide-react";
-import { useAddExpanceMutation } from "@/redux/api/expenseApi";
+import { useAddExpenseMutation } from "@/redux/api/expenseApi";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { HandleMessageUIError, HandleMessageUISuccess } from "../DarkLiteMood/ThemeProvider";
 import { setLoading } from "@/redux/authSlice";
-const AddExpance = ({ onClose }) => {
+const AddExpance = ({ onClose, editData, updateExpense }) => {
 
   const [formData, setFormData] = useState({
     amount: "",
@@ -16,7 +16,19 @@ const AddExpance = ({ onClose }) => {
     paymentMethod: "Cash",
   });
  const dispatch = useDispatch();
-  const [addExpense, { isLoading }] = useAddExpanceMutation();
+  const [addExpense, { isLoading }] = useAddExpenseMutation();
+
+  useEffect(() => {
+    if (editData) {
+      setFormData({
+        amount: editData.amount || "",
+        date: editData.date ? new Date(editData.date).toISOString().split('T')[0] : "",
+        category: editData.category || "",
+        description: editData.description || "",
+        paymentMethod: editData.paymentMethod || "Cash",
+      });
+    }
+  }, [editData]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,27 +36,33 @@ const AddExpance = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Expense Data Submitted:", formData);
 
   try {
     dispatch(setLoading(true));
-    const result = await addExpense(formData).unwrap();
-    if (result.success) {
-      toast.success(result.message,HandleMessageUISuccess());
-      setFormData({
-        amount:"",
-        date:"",
-        category:"",
-        description:"",
-        paymentMethod:"Cash",
-      });
+    
+    if (editData && updateExpense) {
+      const result = await updateExpense({ id: editData._id, data: formData }).unwrap();
+      if (result.success) {
+        toast.success('Expense updated successfully!', HandleMessageUISuccess());
         if (onClose) onClose();
+      }
+    } else {
+      const result = await addExpense(formData).unwrap();
+      if (result.success) {
+        toast.success(result.message,HandleMessageUISuccess());
+        setFormData({
+          amount:"",
+          date:"",
+          category:"",
+          description:"",
+          paymentMethod:"Cash",
+        });
+        if (onClose) onClose();
+      }
     }
-    
   } catch (error) {
-    console.error("Error adding expense:", error);
-    toast.error(error?.data?.message || "Error adding expense",HandleMessageUIError());
-    
+    console.error("Error:", error);
+    toast.error(error?.data?.message || "Error processing expense",HandleMessageUIError());
   }
   finally {
     dispatch(setLoading(false));
@@ -60,7 +78,7 @@ const AddExpance = ({ onClose }) => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-          Add Expense
+          {editData ? 'Edit Expense' : 'Add Expense'}
         </h2>
         {onClose && (
           <button
@@ -134,7 +152,7 @@ const AddExpance = ({ onClose }) => {
           type="submit"
           className="w-full bg-[#14B8A6] hover:bg-[#0d9488] text-white font-bold py-3 rounded-lg transition mt-6"
         >
-            {isLoading ? "Adding..." : "Add Expense"}
+            {isLoading ? (editData ? "Updating..." : "Adding...") : (editData ? "Update Expense" : "Add Expense")}
         </button>
       </form>
     </div>

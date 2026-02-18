@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
 import { toast } from "sonner";
@@ -7,7 +7,7 @@ import { X } from "lucide-react";
 import CategorySelector from "./CategorySelector";
 import { useAddIncomeMutation } from "@/redux/api/incomeApi";
 
-const AddIncome = ({ onClose }) => {
+const AddIncome = ({ onClose, editData, updateIncome }) => {
     const [formData, setFormData] = useState({
         amount: "",
         date: "",
@@ -18,6 +18,18 @@ const AddIncome = ({ onClose }) => {
     const dispatch = useDispatch();
     const [addIncome, { isLoading }] = useAddIncomeMutation();
 
+    useEffect(() => {
+        if (editData) {
+            setFormData({
+                amount: editData.amount || "",
+                date: editData.date ? new Date(editData.date).toISOString().split('T')[0] : "",
+                category: editData.category || "",
+                description: editData.description || "",
+                paymentMethod: editData.paymentMethod || "Cash",
+            });
+        }
+    }, [editData]);
+
     const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]:value });
@@ -25,26 +37,33 @@ const AddIncome = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Data Submitted:", formData);
         
         try {
             dispatch(setLoading(true));
-            const result = await addIncome(formData).unwrap();
             
-            if (result.success) {
-                toast.success(result.message, HandleMessageUISuccess());
-                setFormData({
-                    amount: "",
-                    date: "",
-                    category: "",
-                    description: "",
-                    paymentMethod: "Cash",
-                });
-                if (onClose) onClose();
+            if (editData && updateIncome) {
+                const result = await updateIncome({ id: editData._id, data: formData }).unwrap();
+                if (result.success) {
+                    toast.success('Income updated successfully!', HandleMessageUISuccess());
+                    if (onClose) onClose();
+                }
+            } else {
+                const result = await addIncome(formData).unwrap();
+                if (result.success) {
+                    toast.success(result.message, HandleMessageUISuccess());
+                    setFormData({
+                        amount: "",
+                        date: "",
+                        category: "",
+                        description: "",
+                        paymentMethod: "Cash",
+                    });
+                    if (onClose) onClose();
+                }
             }
         } catch (error) {
-            console.error("Error adding income:", error);
-            toast.error(error?.data?.message || "Error adding income", HandleMessageUIError());
+            console.error("Error:", error);
+            toast.error(error?.data?.message || "Error processing income", HandleMessageUIError());
         } finally {
             dispatch(setLoading(false));
         }
@@ -59,7 +78,7 @@ const AddIncome = ({ onClose }) => {
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                    Add Income
+                    {editData ? 'Edit Income' : 'Add Income'}
                 </h2>
                 {onClose && (
                     <button
@@ -133,7 +152,7 @@ const AddIncome = ({ onClose }) => {
                     type="submit"
                     className="w-full bg-[#14B8A6] hover:bg-[#0d9488] text-white font-bold py-3 rounded-lg transition mt-6"
                 >
-                    {isLoading ? "Adding..." : "Add Income"}
+                    {isLoading ? (editData ? "Updating..." : "Adding...") : (editData ? "Update Income" : "Add Income")}
                 </button>
             </form>
         </div>

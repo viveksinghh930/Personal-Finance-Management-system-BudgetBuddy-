@@ -3,7 +3,6 @@ import {apiSlice} from "./apiSlice";
 
  export const incomeApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        // ADD INCOME
         addIncome: builder.mutation({
             query: (data) => ({
                 url: '/income',
@@ -12,20 +11,36 @@ import {apiSlice} from "./apiSlice";
             }),
             invalidatesTags: ["Income"]
         }),
-        // GET ALL INCOME
         getIncome: builder.query({
             query: () => '/income',
             providesTags: ["Income"]
         }),
-      // DELETE INCOME
-      deleteIncome: builder.mutation({
-        query: (id) => ({
-            url: `/income/${id}`,
-            method: 'DELETE'
+        updateIncome: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/income/${id}`,
+                method: 'PUT',
+                body: data
+            }),
+            invalidatesTags: ["Income"]
         }),
-        invalidatesTags: ["Income"]
-      })
+        deleteIncome: builder.mutation({
+            query: (id) => ({
+                url: `/income/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ["Income"]
+        }),
+        getTotalIncome: builder.query({
+            query: () => '/income/total',
+            providesTags: ["Income"]
+        })
     })
 })
 
-export const { useAddIncomeMutation, useGetIncomeQuery, useDeleteIncomeMutation } = incomeApi;
+export const { 
+    useAddIncomeMutation, 
+    useGetIncomeQuery, 
+    useUpdateIncomeMutation,
+    useDeleteIncomeMutation,
+    useGetTotalIncomeQuery 
+} = incomeApi;

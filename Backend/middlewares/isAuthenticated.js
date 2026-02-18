@@ -21,6 +21,7 @@ const isAuthenticated = (req, resp, next) => {
         }
 
         req.userId = decode.userId;
+        req.id = decode.userId;
 
         next();
         

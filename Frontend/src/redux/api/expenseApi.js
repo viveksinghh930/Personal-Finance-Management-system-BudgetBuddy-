@@ -2,7 +2,7 @@ import { apiSlice } from "./apiSlice";
 
 export const expenseApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        addExpance: builder.mutation({
+        addExpense: builder.mutation({
             query: (data) => ({
                 url: '/expense',
                 method: 'POST',
@@ -10,11 +10,36 @@ export const expenseApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["Expense"]
         }),
-        getExpance: builder.query({
+        getExpense: builder.query({
             query: () => '/expense',
+            providesTags: ["Expense"]
+        }),
+        updateExpense: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/expense/${id}`,
+                method: 'PUT',
+                body: data
+            }),
+            invalidatesTags: ["Expense"]
+        }),
+        deleteExpense: builder.mutation({
+            query: (id) => ({
+                url: `/expense/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ["Expense"]
+        }),
+        getTotalExpense: builder.query({
+            query: () => '/expense/total',
             providesTags: ["Expense"]
         })
     })
 })
 
-export const { useAddExpanceMutation, useGetExpanceQuery } = expenseApi;
+export const { 
+    useAddExpenseMutation, 
+    useGetExpenseQuery,
+    useUpdateExpenseMutation,
+    useDeleteExpenseMutation,
+    useGetTotalExpenseQuery 
+} = expenseApi;

@@ -1,17 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../Shared/SideBar";
 import { Tag, Plus, Edit, Trash2 } from "lucide-react";
 import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 import DeshboardNavbar from "./DeshboardNavbar";
+import { useGetIncomeQuery } from "@/redux/api/incomeApi";
+import { useGetExpenseQuery } from "@/redux/api/expenseApi";
 
 const Categories = () => {
-    const [categories] = useState([
-        { id: 1, name: "Salary", type: "Income", color: "#10b981", count: 12 },
-        { id: 2, name: "Food", type: "Expense", color: "#ef4444", count: 45 },
-        { id: 3, name: "Transport", type: "Expense", color: "#f59e0b", count: 28 },
-        { id: 4, name: "Shopping", type: "Expense", color: "#8b5cf6", count: 15 },
-        { id: 5, name: "Freelance", type: "Income", color: "#06b6d4", count: 8 },
-    ]);
+    const [categories, setCategories] = useState([]);
+
+    const { data: incomeData } = useGetIncomeQuery();
+    const { data: expenseData } = useGetExpenseQuery();
+
+    useEffect(() => {
+        const incomeList = incomeData?.income || [];
+        const expenseList = expenseData?.expense || [];
+
+        const categoryMap = {};
+
+        incomeList.forEach(item => {
+            if (!categoryMap[item.category]) {
+                categoryMap[item.category] = { name: item.category, type: "Income", count: 0, color: "#10b981" };
+            }
+            categoryMap[item.category].count++;
+        });
+
+        expenseList.forEach(item => {
+            if (!categoryMap[item.category]) {
+                categoryMap[item.category] = { name: item.category, type: "Expense", count: 0, color: "#ef4444" };
+            }
+            categoryMap[item.category].count++;
+        });
+
+        const categoriesArray = Object.values(categoryMap).map((cat, index) => ({
+            id: index + 1,
+            ...cat
+        }));
+
+        setCategories(categoriesArray);
+    }, [incomeData, expenseData]);
 
     return (
         <div className={`${darkThemeColor} flex min-h-screen md:ml-72 bg-gray-50 dark:bg-gray-900`}>

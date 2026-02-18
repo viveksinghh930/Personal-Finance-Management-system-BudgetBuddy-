@@ -7,13 +7,12 @@ import DeshBord from './Components/Dashboard/DeshBord';
 import { ThemeProvider } from './Components/DarkLiteMood/ThemeProvider';
 import  {AddIncome}  from './Components/Dashboard/AddIncome';
 import { AddExpance } from './Components/Dashboard/AddExpance';
-import Expense from './Components/Dashboard/Expense';
+
 import IncomeManagement from './Components/Dashboard/IncomeManagement';
 import ExpenseManagement from './Components/Dashboard/ExpenseManagement';
 import AccountingManagement from './Components/Dashboard/AccountingManagement';
 import Reports from './Components/Dashboard/Reports';
 import Categories from './Components/Dashboard/Categories';
-import Analytics from './Components/Dashboard/Analytics';
 import Settings from './Components/Dashboard/Settings';
 import Profile from './Components/Dashboard/Profile';
 import Notifications from './Components/Dashboard/Notifications';
@@ -43,10 +42,7 @@ const appRouter = createBrowserRouter([
     path: '/dashboard/expense',
     element: <ExpenseManagement/>
   },
-  {
-    path: '/dashboard/expense/get',
-    element: <Expense/>
-  },
+  
   {
     path: '/dashboard/accounting',
     element: <AccountingManagement/>
@@ -58,10 +54,6 @@ const appRouter = createBrowserRouter([
   {
     path: '/dashboard/categories',
     element: <Categories/>
-  },
-  {
-    path: '/dashboard/analytics',
-    element: <Analytics/>
   },
   {
     path: '/dashboard/settings',

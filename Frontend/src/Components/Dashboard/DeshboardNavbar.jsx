@@ -27,16 +27,15 @@ const DeshboardNavbar = ({ title, subtitle }) => {
 
   // Default layout for Dashboard (no title)
   return (
-    <div className="flex items-center justify-between h-24">
-      <div className="md:flex items-center gap-4 hidden">
+    <div className="flex items-center justify-between mb-6 py-4">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+      <div className="flex items-center gap-3 sm:gap-5">
         <Link to="/notifications">
-          <FiBell className="text-2xl cursor-pointer dark:text-white hover:text-[#257c8a]" />
+          <FiBell className="text-xl sm:text-2xl cursor-pointer dark:text-white hover:text-[#257c8a]" />
         </Link>
-      </div>
-      <div className="hidden md:flex items-center gap-5">
         <DarkMode />
         <Link to="/profile">
-          <FiUser className="text-2xl cursor-pointer dark:text-white hover:text-[#257c8a]" />
+          <FiUser className="text-xl sm:text-2xl cursor-pointer dark:text-white hover:text-[#257c8a]" />
         </Link>
       </div>
     </div>

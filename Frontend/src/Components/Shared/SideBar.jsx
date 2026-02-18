@@ -41,14 +41,15 @@ const Sidebar = () => {
     const Effact = 'flex  items-center gap-5 p-1 rounded-md hover:bg-[#257c8a] hover:text-white transition ';
     const AccordionEffact = 'px-10 text-[17px] flex  items-center  p-1 rounded-md hover:bg-gray-300  hover:text-black transition ';
     return (
-        <div className={`flex `}>
+        <div className="flex">
             {/* Mobile Sidebar */}
-            <Sheet >
-                <SheetTrigger asChild>
-                    <button className={`p-2 md:hidden bg-[#257c8a]  text-white `}>
-                        <Menu size={24} />
-                    </button>
-                </SheetTrigger>
+            <div className="md:hidden fixed top-0 left-0 z-50">
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <button className="p-3 m-2 bg-[#257c8a] text-white rounded-lg shadow-lg">
+                            <Menu size={24} />
+                        </button>
+                    </SheetTrigger>
 
                 <SheetContent side="left" className={`${darkThemeColor} text-black bg-white h-full flex flex-col  7`}>
                     <div className="flex gap-3 p-2 justify-between items-center">
@@ -119,17 +120,6 @@ const Sidebar = () => {
                             ]}
 
                         />
-                        <SidebarElement
-                            title="Analytics"
-                            effectClass={Effact}
-                            icon={BarChart}
-                            links={[
-                                {
-                                    path: "/dashboard/analytics",
-                                }
-                            ]}
-
-                        />
                     </nav>
 
                     {/* Move Settings and Logout to the bottom */}
@@ -177,14 +167,12 @@ const Sidebar = () => {
                         />
                     </div>
                 </SheetContent>
-            </Sheet>
+                </Sheet>
+            </div>
 
             {/* Desktop Sidebar */}
-            <aside className={cn(`dark:bg-gray-800 hidden md:flex flex-col bg-gray-100 h-screen fixed left-0 top-0 p-9 transition-all overflow-y-auto`, collapsed ? "w-28" : "w-72")}>
-                <div className="flex gap-3">
-                    {/* <button onClick={() => setCollapsed(!collapsed)} className="p-2 self-end rounded-md bg-[#257c8a] text-white">
-                        <Menu size={24} />
-                    </button> */}
+            <aside className={cn(`dark:bg-gray-800 hidden md:flex flex-col bg-gray-100 h-screen fixed left-0 top-0 p-6 transition-all overflow-y-auto z-40`, collapsed ? "w-20" : "w-72")}>
+                <div className="flex gap-3 mb-6">
                     {!collapsed && (
                         <h1 className='text-2xl font-bold transition duration-100'>
                             Budget
@@ -192,10 +180,9 @@ const Sidebar = () => {
                                 Buddy
                             </span>
                         </h1>
-
                     )}
                 </div>
-                <nav className="mt-4 space-y-4 text-xl">
+                <nav className="mt-4 space-y-3 text-lg flex-1">
                     <SidebarElement
                         title="Dashboard"
                         collapsed={collapsed}
@@ -259,21 +246,9 @@ const Sidebar = () => {
                         ]}
 
                     />
-                    <SidebarElement
-                        title="Analytics"
-                        collapsed={collapsed}
-                        effectClass={Effact}
-                        icon={BarChart}
-                        links={[
-                            {
-                                path: "/dashboard/analytics",
-                            }
-                        ]}
-
-                    />
 
                 </nav>
-                <nav className="mt-auto space-y-2 text-xl">
+                <nav className="mt-auto space-y-3 text-lg pt-4 border-t border-gray-300 dark:border-gray-600">
 
                     <SidebarElement
                         title="Settings"

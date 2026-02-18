@@ -297,3 +297,80 @@ export const updateProfile = async (req, resp) => {
         });
     }
 };
+
+export const changePassword = async (req, resp) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const userId = req.userId;
+
+        if (!currentPassword || !newPassword) {
+            return resp.status(400).json({
+                message: "Current password and new password are required",
+                success: false,
+            });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return resp.status(404).json({
+                message: "User not found",
+                success: false,
+            });
+        }
+
+        if (user.isGoogleUser) {
+            return resp.status(400).json({
+                message: "Google users cannot change password",
+                success: false,
+            });
+        }
+
+        const isValidPassword = await bcrypt.compare(currentPassword, user.password);
+        if (!isValidPassword) {
+            return resp.status(400).json({
+                message: "Current password is incorrect",
+                success: false,
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+        await user.save();
+
+        return resp.status(200).json({
+            message: "Password changed successfully",
+            success: true,
+        });
+    } catch (error) {
+        console.error(error);
+        return resp.status(500).json({
+            message: "Internal server error",
+            success: false,
+        });
+    }
+};
+
+export const getProfile = async (req, resp) => {
+    try {
+        const userId = req.userId;
+        const user = await User.findById(userId).select('-password');
+        
+        if (!user) {
+            return resp.status(404).json({
+                message: "User not found",
+                success: false,
+            });
+        }
+
+        return resp.status(200).json({
+            user,
+            success: true,
+        });
+    } catch (error) {
+        console.error(error);
+        return resp.status(500).json({
+            message: "Internal server error",
+            success: false,
+        });
+    }
+};

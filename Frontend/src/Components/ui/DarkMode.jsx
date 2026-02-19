@@ -5,8 +5,8 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+  } from "@/Components/ui/dropdown-menu"
+import { Button } from "@/Components/ui/button"
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '../DarkLiteMood/ThemeProvider';
 import{darkThemeColor} from '../DarkLiteMood/ThemeProvider'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-import { Button } from "@/components/ui/button"
-import DarkMode from "@/components/ui/Darkmode";
+import { Button } from "@/Components/ui/button"
+import DarkMode from "@/Components/ui/DarkMode";
 import {
   Sheet,
   SheetClose,
@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
+} from "@/Components/ui/sheet"
 import { Menu } from 'lucide-react';
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { Link } from 'react-router-dom';

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DarkMode from "@/components/ui/Darkmode";
+import DarkMode from "@/Components/ui/DarkMode";
 import { FiBell, FiUser } from "react-icons/fi";
 
 const DeshboardNavbar = ({ title, subtitle }) => {

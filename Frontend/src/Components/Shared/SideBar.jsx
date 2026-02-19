@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent } from "@/Components/ui/sheet";
 import { Home, Briefcase, Settings, Menu, BarChart, FileText, Tag, LogOut, Bell, UserPen } from "lucide-react";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { cn } from "@/lib/utils";

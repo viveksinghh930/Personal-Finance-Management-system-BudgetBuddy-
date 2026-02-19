@@ -188,7 +188,7 @@ import {
     Filter,
     Eye
 } from "lucide-react";
-import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/Components/ui/sheet";
 import AddBorrow from "./AddBorrow";
 import { AddDebt } from "./AddDebt";
 import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";

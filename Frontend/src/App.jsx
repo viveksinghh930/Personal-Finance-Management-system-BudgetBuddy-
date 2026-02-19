@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './Components/LandingPage/Home';
 import { RouterProvider } from 'react-router';
-import Login from './Components/Auth/Login';
+import Login from './Components/auth/Login';
 import SignUp from './Components/auth/SignUp.jsx';
 import DeshBord from './Components/Dashboard/DeshBord';
 import { ThemeProvider } from './Components/DarkLiteMood/ThemeProvider';

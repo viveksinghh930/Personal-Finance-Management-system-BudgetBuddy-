@@ -10,7 +10,7 @@ import { useGetBorrowQuery } from '@/redux/api/borrowApi'
 import { useGetDebtsQuery } from '@/redux/api/debtApi'
 import { useGetPaymentsQuery, useDeletePaymentMutation, useUpdatePaymentMutation } from '@/redux/api/paymentApi'
 import AddOnlinePayment from './AddOnlinePayment'
-import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/Components/ui/sheet'
 import { toast } from 'sonner'
 
 const DeshBord = () => {

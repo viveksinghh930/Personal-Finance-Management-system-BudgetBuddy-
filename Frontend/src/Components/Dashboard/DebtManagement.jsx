@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/Components/ui/sheet";
 import Sidebar from "../Shared/SideBar";
 import { AddDebt } from "./AddDebt";
 

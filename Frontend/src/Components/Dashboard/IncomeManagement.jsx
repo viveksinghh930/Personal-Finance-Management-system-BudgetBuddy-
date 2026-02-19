@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AddIncome } from "./AddIncome";
-import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/Components/ui/sheet";
 import Sidebar from "../Shared/SideBar";
 import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 import DeshboardNavbar from "./DeshboardNavbar";

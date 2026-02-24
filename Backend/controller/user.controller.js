@@ -145,7 +145,7 @@ export const login = async (req, resp) => {
             return resp.status(200).cookie("token", token, {
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
                 secure: process.env.NODE_ENV === "production",
             }).json({
                 message: `Welcome back, ${userResponse.fullname}!`,
@@ -192,7 +192,7 @@ export const login = async (req, resp) => {
             return resp.status(200).cookie("token", token, {
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
                 secure: process.env.NODE_ENV === "production",
             }).json({
                 message: `Welcome back, ${userResponse.fullname}!`,

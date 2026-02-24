@@ -25,10 +25,8 @@ const corsOptions = {
         'http://localhost:5173', 
         'http://localhost:3000', 
         'http://localhost:3001',
-        'https://personal-finance-management-system-weld.vercel.app',
-        'https://personal-finance-management-system-budget-buddy-eerkvhrh0.vercel.app',
-        'https://personal-finance-management-git-77c827-viveksinghh930s-projects.vercel.app',
-        'https://personal-finance-management-system-budget-buddy-7r726d4t9.vercel.app'
+        'https://budget-buddy-nu-two.vercel.app',
+        'https://personal-finance-management-system-weld.vercel.app'
     ],
     credentials: true,
 }

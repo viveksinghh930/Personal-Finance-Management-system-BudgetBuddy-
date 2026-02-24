@@ -259,8 +259,8 @@ const DeshBord = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-24 h-12">
-                      <ResponsiveContainer width="100%" height="100%">
+                    <div style={{ width: 96, height: 48, minWidth: 96, minHeight: 48 }}>
+                      <ResponsiveContainer>
                         <LineChart data={card.chartData}>
                           <Line 
                             type="monotone" 
@@ -297,8 +297,9 @@ const DeshBord = () => {
                     </div>
                   </div>
                 </div>
-                <ResponsiveContainer width="100%" height={250}>
-                  <BarChart data={financialStatsData} barGap={0}>
+                <div style={{ width: '100%', height: 250, minHeight: 250 }}>
+                  <ResponsiveContainer>
+                    <BarChart data={financialStatsData} barGap={0}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
                     <XAxis dataKey="month" stroke="#9CA3AF" tick={{ fontSize: 11 }} />
                     <YAxis stroke="#9CA3AF" tick={{ fontSize: 11 }} />
@@ -312,8 +313,9 @@ const DeshBord = () => {
                     />
                     <Bar dataKey="income" fill="#14B8A6" radius={[4, 4, 0, 0]} barSize={18} />
                     <Bar dataKey="expenses" fill="#D1D5DB" radius={[4, 4, 0, 0]} barSize={18} />
-                  </BarChart>
-                </ResponsiveContainer>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
 
               {/* Recent Activities */}
@@ -329,8 +331,9 @@ const DeshBord = () => {
                   <h3 className="text-3xl font-bold text-gray-900 dark:text-white">₹{currentMonthTotal.toLocaleString('en-IN')}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">{new Date().toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</p>
                 </div>
-                <ResponsiveContainer width="100%" height={180}>
-                  <AreaChart data={recentActivityData}>
+                <div style={{ width: '100%', height: 180, minHeight: 180 }}>
+                  <ResponsiveContainer>
+                    <AreaChart data={recentActivityData}>
                     <defs>
                       <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#7DD3C0" stopOpacity={0.3}/>
@@ -354,8 +357,9 @@ const DeshBord = () => {
                       fillOpacity={1} 
                       fill="url(#colorAmount)" 
                     />
-                  </AreaChart>
-                </ResponsiveContainer>
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
 

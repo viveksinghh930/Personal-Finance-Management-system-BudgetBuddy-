@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sheet, SheetContent } from "@/Components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/Components/ui/sheet";
 import Sidebar from "../Shared/SideBar";
 import AddBorrow from "./AddBorrow";
 
@@ -93,6 +93,8 @@ const BorrowManagement = () => {
                 {/* Add Borrow Sheet */}
                 <Sheet open={isAddBorrowOpen} onOpenChange={setIsAddBorrowOpen}>
                     <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">
+                        <SheetTitle className="sr-only">Add Borrow</SheetTitle>
+                        <SheetDescription className="sr-only">Add a new borrow transaction</SheetDescription>
                         <AddBorrow onClose={() => setIsAddBorrowOpen(false)} />
                     </SheetContent>
                 </Sheet>

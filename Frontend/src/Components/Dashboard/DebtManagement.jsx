@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sheet, SheetContent } from "@/Components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/Components/ui/sheet";
 import Sidebar from "../Shared/SideBar";
 import { AddDebt } from "./AddDebt";
 
@@ -93,6 +93,8 @@ const DebtManagement = () => {
                 {/* Add Debt Sheet */}
                 <Sheet open={isAddDebtOpen} onOpenChange={setIsAddDebtOpen}>
                     <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">
+                        <SheetTitle className="sr-only">Add Debt</SheetTitle>
+                        <SheetDescription className="sr-only">Add a new debt transaction</SheetDescription>
                         <AddDebt onClose={() => setIsAddDebtOpen(false)} />
                     </SheetContent>
                 </Sheet>

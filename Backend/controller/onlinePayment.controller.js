@@ -45,6 +45,37 @@ export const getPaymentsByUserId = async (req, res) => {
     }
 };
 
+export const updatePayment = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { paymentMethod, transactionId, amount, description, status, date } = req.body;
+
+        const payment = await OnlinePayment.findByIdAndUpdate(
+            id,
+            { paymentMethod, transactionId, amount, description, status, date },
+            { new: true }
+        );
+
+        if (!payment) {
+            return res.status(404).json({
+                success: false,
+                message: "Payment not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Payment updated successfully",
+            payment
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 export const deletePayment = async (req, res) => {
     try {
         const { id } = req.params;

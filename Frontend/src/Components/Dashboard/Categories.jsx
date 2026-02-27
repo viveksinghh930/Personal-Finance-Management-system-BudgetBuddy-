@@ -5,6 +5,8 @@ import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 import DeshboardNavbar from "./DeshboardNavbar";
 import { useGetIncomeQuery } from "@/redux/api/incomeApi";
 import { useGetExpenseQuery } from "@/redux/api/expenseApi";
+import { toast } from "sonner";
+import { HandleMessageUISuccess } from '../DarkLiteMood/ThemeProvider';
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
@@ -52,7 +54,10 @@ const Categories = () => {
                     
                     {/* Add Category Button */}
                     <div className="flex justify-end mb-6">
-                        <button className="bg-[#257c8a] hover:bg-[#1f6a77] text-white px-6 py-3 rounded-lg flex items-center gap-2">
+                        <button 
+                            onClick={() => toast.info('Add Category feature coming soon!', HandleMessageUISuccess())}
+                            className="bg-[#257c8a] hover:bg-[#1f6a77] text-white px-6 py-3 rounded-lg flex items-center gap-2"
+                        >
                             <Plus size={20} />
                             Add Category
                         </button>

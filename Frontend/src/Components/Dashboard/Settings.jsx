@@ -6,6 +6,7 @@ import { darkThemeColor } from "../DarkLiteMood/ThemeProvider";
 import DeshboardNavbar from "./DeshboardNavbar";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
+import { HandleMessageUISuccess, HandleMessageUIError } from '../DarkLiteMood/ThemeProvider';
 import { useChangePasswordMutation, useUpdateProfileMutation } from "@/redux/api/userApi";
 import { setUser } from "@/redux/authSlice";
 
@@ -38,7 +39,7 @@ const Settings = () => {
 
     const handleUpdateProfile = async () => {
         if (!formData.fullName || !formData.email) {
-            toast.error("Name and email are required!");
+            toast.error("Name and email are required!", HandleMessageUIError());
             return;
         }
         
@@ -50,23 +51,23 @@ const Settings = () => {
             }).unwrap();
             
             dispatch(setUser(response.user));
-            toast.success(response.message || "Profile updated successfully!");
+            toast.success(response.message || "Profile updated successfully!", HandleMessageUISuccess());
         } catch (error) {
-            toast.error(error?.data?.message || "Failed to update profile");
+            toast.error(error?.data?.message || "Failed to update profile", HandleMessageUIError());
         }
     };
 
     const handleChangePassword = async () => {
         if (!formData.currentPassword || !formData.newPassword || !formData.confirmPassword) {
-            toast.error("All password fields are required!");
+            toast.error("All password fields are required!", HandleMessageUIError());
             return;
         }
         if (formData.newPassword !== formData.confirmPassword) {
-            toast.error("New passwords do not match!");
+            toast.error("New passwords do not match!", HandleMessageUIError());
             return;
         }
         if (formData.newPassword.length < 6) {
-            toast.error("Password must be at least 6 characters!");
+            toast.error("Password must be at least 6 characters!", HandleMessageUIError());
             return;
         }
         
@@ -76,10 +77,10 @@ const Settings = () => {
                 newPassword: formData.newPassword
             }).unwrap();
             
-            toast.success(response.message || "Password changed successfully!");
+            toast.success(response.message || "Password changed successfully!", HandleMessageUISuccess());
             setFormData({ ...formData, currentPassword: "", newPassword: "", confirmPassword: "" });
         } catch (error) {
-            toast.error(error?.data?.message || "Failed to change password");
+            toast.error(error?.data?.message || "Failed to change password", HandleMessageUIError());
         }
     };
 

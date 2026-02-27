@@ -12,6 +12,7 @@ import { useGetPaymentsQuery, useDeletePaymentMutation, useUpdatePaymentMutation
 import AddOnlinePayment from './AddOnlinePayment'
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/Components/ui/sheet'
 import { toast } from 'sonner'
+import { HandleMessageUISuccess, HandleMessageUIError } from '../DarkLiteMood/ThemeProvider'
 
 const DeshBord = () => {
   const [isViewOpen, setIsViewOpen] = useState(false);
@@ -194,9 +195,9 @@ const DeshBord = () => {
   const handleDeletePayment = async (id) => {
     try {
       await deletePayment(id).unwrap();
-      toast.success('Payment deleted successfully!');
+      toast.success('Payment deleted successfully!', HandleMessageUISuccess());
     } catch (error) {
-      toast.error(error?.data?.message || 'Failed to delete');
+      toast.error(error?.data?.message || 'Failed to delete', HandleMessageUIError());
     }
   };
 
@@ -426,26 +427,26 @@ const DeshBord = () => {
 
           {/* View Payment Sheet */}
           <Sheet open={isViewOpen} onOpenChange={setIsViewOpen}>
-            <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">
+            <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-white dark:bg-gray-800">
               <SheetTitle className="sr-only">Payment Details</SheetTitle>
               <SheetDescription className="sr-only">Online payment transaction details</SheetDescription>
               {viewData && (
                 <div className="p-6">
                   <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">Payment Details</h2>
                   <div className="space-y-4">
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Payment Method</p>
                       <p className="text-lg font-semibold text-gray-900 dark:text-white">{viewData.paymentMethod}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Transaction ID</p>
                       <p className="text-lg font-semibold text-gray-900 dark:text-white">{viewData.transactionId}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Amount</p>
-                      <p className="text-2xl font-bold text-green-600">₹{viewData.amount.toLocaleString('en-IN')}</p>
+                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">₹{viewData.amount.toLocaleString('en-IN')}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Status</p>
                       <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
                         viewData.status === 'Success' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 
@@ -455,11 +456,11 @@ const DeshBord = () => {
                         {viewData.status}
                       </span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Date</p>
                       <p className="text-lg font-semibold text-gray-900 dark:text-white">{new Date(viewData.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Description</p>
                       <p className="text-lg font-semibold text-gray-900 dark:text-white">{viewData.description || 'N/A'}</p>
                     </div>
@@ -471,7 +472,7 @@ const DeshBord = () => {
 
           {/* Edit Payment Sheet */}
           <Sheet open={isEditOpen} onOpenChange={setIsEditOpen}>
-            <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">
+            <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto bg-white dark:bg-gray-800">
               <SheetTitle className="sr-only">Edit Payment</SheetTitle>
               <SheetDescription className="sr-only">Edit online payment transaction</SheetDescription>
               <AddOnlinePayment 

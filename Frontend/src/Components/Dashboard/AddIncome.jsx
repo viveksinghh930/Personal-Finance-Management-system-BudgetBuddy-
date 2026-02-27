@@ -42,7 +42,7 @@ const AddIncome = ({ onClose, editData, updateIncome }) => {
             dispatch(setLoading(true));
             
             if (editData && updateIncome) {
-                const result = await updateIncome({ id: editData._id, data: formData }).unwrap();
+                const result = await updateIncome({ id: editData._id, ...formData }).unwrap();
                 if (result.success) {
                     toast.success('Income updated successfully!', HandleMessageUISuccess());
                     if (onClose) onClose();

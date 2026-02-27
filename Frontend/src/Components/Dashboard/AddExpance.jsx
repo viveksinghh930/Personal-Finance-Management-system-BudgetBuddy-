@@ -41,7 +41,7 @@ const AddExpance = ({ onClose, editData, updateExpense }) => {
     dispatch(setLoading(true));
     
     if (editData && updateExpense) {
-      const result = await updateExpense({ id: editData._id, data: formData }).unwrap();
+      const result = await updateExpense({ id: editData._id, ...formData }).unwrap();
       if (result.success) {
         toast.success('Expense updated successfully!', HandleMessageUISuccess());
         if (onClose) onClose();

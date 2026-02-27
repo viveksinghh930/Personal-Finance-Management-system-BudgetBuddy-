@@ -36,7 +36,7 @@ const AddOnlinePayment = ({ editData, updatePayment }) => {
         e.preventDefault();
         try {
             if (editData && updatePayment) {
-                const result = await updatePayment({ id: editData._id, data: { ...formData, amount: Number(formData.amount) } }).unwrap();
+                const result = await updatePayment({ id: editData._id, ...formData, amount: Number(formData.amount) }).unwrap();
                 if (result.success) {
                     toast.success('Payment updated successfully!', HandleMessageUISuccess());
                     setFormData({

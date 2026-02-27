@@ -52,21 +52,29 @@ export const useTheme = () => {
 
 
 export const HandleMessageUISuccess = () => {
+  const isDark = document.documentElement.classList.contains('dark');
   return {
     duration: 4000,
-    icon: "✅", // Optional icon
-    theme: "dark", // Use dark theme for toast
-    position: "bottom-right", // Position where toast appears
-    style: { backgroundColor: "#257c8a", color: "#fff" }
+    icon: "✅",
+    position: "bottom-right",
+    style: { 
+      backgroundColor: isDark ? "#1F2937" : "#257c8a", 
+      color: "#fff",
+      border: isDark ? "1px solid #374151" : "none"
+    }
   };
 };
 
 export const HandleMessageUIError = () => {
+  const isDark = document.documentElement.classList.contains('dark');
   return {
     duration: 4000,
     icon: "❌",
-    theme: "dark",
-    position: "buttom-right",
-    style: { backgroundColor: "#257c8a", color: "#fff" }
+    position: "bottom-right",
+    style: { 
+      backgroundColor: isDark ? "#1F2937" : "#EF4444", 
+      color: "#fff",
+      border: isDark ? "1px solid #374151" : "none"
+    }
   }
 }

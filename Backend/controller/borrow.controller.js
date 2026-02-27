@@ -63,7 +63,7 @@ export const getBorrowByID = async (req, resp) => {
             return resp.status(404).json({ message: "No borrow records found", success: false });
         }
         
-        return resp.status(200).json({ message: "Borrow records retrieved successfully", borrow, success: true });
+        return resp.status(200).json({ message: "Borrow records retrieved successfully", borrows: borrow, success: true });
     } catch (error) {
         return resp.status(500).json({ message: "Internal server error", success: false });
     }

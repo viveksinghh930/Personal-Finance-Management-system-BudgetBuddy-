@@ -8,6 +8,7 @@ import { useGetBorrowQuery } from "@/redux/api/borrowApi";
 import { useGetDebtsQuery } from "@/redux/api/debtApi";
 import { useMemo, useState, useEffect } from "react";
 import { toast } from "sonner";
+import { HandleMessageUISuccess, HandleMessageUIError } from '../DarkLiteMood/ThemeProvider';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
@@ -48,7 +49,7 @@ const Reports = () => {
     }, [debtData]);
 
     const totalBorrow = useMemo(() => {
-        return borrowData?.borrows?.reduce((sum, item) => sum + item.totalAmount, 0) || 0;
+        return borrowData?.borrows?.reduce((sum, item) => sum + (item.totalAmount || item.amount), 0) || 0;
     }, [borrowData]);
 
     const filterDataByDate = (data, start, end) => {
@@ -147,7 +148,7 @@ const Reports = () => {
         } else if (type === 'Category') {
             const hasFilter = Object.values(categoryFilters).some(v => v);
             if (!hasFilter) {
-                toast.error('Please select at least one category filter');
+                toast.error('Please select at least one category filter', HandleMessageUIError());
                 return;
             }
             
@@ -231,7 +232,7 @@ const Reports = () => {
             }
         } else if (type === 'Custom') {
             if (!startDate || !endDate) {
-                toast.error('Please select start and end dates');
+                toast.error('Please select start and end dates', HandleMessageUIError());
                 return;
             }
             
@@ -280,7 +281,7 @@ const Reports = () => {
         setRecentReports(updated);
         localStorage.setItem('recentReports', JSON.stringify(updated));
         
-        toast.success(`${type} report downloaded successfully!`);
+        toast.success(`${type} report downloaded successfully!`, HandleMessageUISuccess());
     };
 
     return (

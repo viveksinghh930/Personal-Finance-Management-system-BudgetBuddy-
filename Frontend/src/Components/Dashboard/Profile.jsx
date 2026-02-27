@@ -108,8 +108,9 @@ const Profile = () => {
                                         <Phone size={20} className="text-gray-500" />
                                         <input 
                                             type="tel" 
-                                            value={user?.phoneNumber || 'Not provided'}
-                                            className="flex-1 p-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
+                                            value={user?.phoneNumber || ''}
+                                            placeholder="Not provided"
+                                            className="flex-1 p-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder:text-gray-400"
                                             readOnly
                                         />
                                     </div>

@@ -220,7 +220,7 @@ const AccountingManagement = () => {
     const [updateBorrow] = useUpdateBorrowMutation();
 
     const debts = debtData?.debts || [];
-    const borrows = borrowData?.borrow || [];
+    const borrows = borrowData?.borrows || [];
 
     const totalDebt = debtStats?.totalAmount || 0;
     const totalDebtPaid = debtStats?.totalPaid || 0;
